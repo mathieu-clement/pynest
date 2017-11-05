@@ -28,6 +28,10 @@ class ConfigFile:
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print('Missing argument: get / set')
+        sys.exit(1)
+
     cfg_file = ConfigFile()
     config = None
     if cfg_file.exists():
@@ -45,8 +49,17 @@ if __name__ == '__main__':
         cfg_file.write(config)
 
     thermostat = nest.get_thermostat()
-    thermostat.enable_heat(True)
 
-    import pprint
-    pp = pprint.PrettyPrinter()
-    pp.pprint(thermostat.data)
+    if sys.argv[1] == 'get':
+        print('Ambient:', thermostat.ambient_temperature)
+        print('Target:', thermostat.target_temperature)
+    elif sys.argv[1] == 'set':
+        if len(sys.argv) < 3:
+            print('Missing argument: target temperature')
+            sys.exit(1)
+        thermostat.enable_heat(True)
+        thermostat.target_temperature = float(sys.argv[2])
+    elif sys.argv[1] == 'heat':
+        thermostat.enable_heat(True)
+    elif sys.argv[1] == 'eco':
+        thermostat.enable_eco(True)
