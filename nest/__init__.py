@@ -111,5 +111,5 @@ class Thermostat:
         self.nest.request('PUT', self.url, json={'hvac_mode': value})
 
 
-    def enable_echo(self, enable):
+    def enable_eco(self, enable):
         self.enable_heat(not enable)
