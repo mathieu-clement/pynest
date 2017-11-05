@@ -70,6 +70,10 @@ class Thermostat:
         self.nest = nest
         self.device_id = device_id
         self.url = 'https://developer-api.nest.com/devices/thermostats/' + device_id
+        self.refresh()
+
+
+    def refresh(self):
         self.data = self.nest.request('GET', self.url).json()
         self.name = self.data['name']
         self.where_name = self.data['where_name']
@@ -105,3 +109,7 @@ class Thermostat:
         else:
             value = 'eco'
         self.nest.request('PUT', self.url, json={'hvac_mode': value})
+
+
+    def enable_echo(self, enable):
+        self.enable_heat(not enable)
