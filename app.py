@@ -48,7 +48,14 @@ if __name__ == '__main__':
         config = {'access_token': nest.access_token}
         cfg_file.write(config)
 
-    thermostat = nest.get_thermostat()
+    thermostat = None
+    if 'thermostat_id' in config:
+        thermostat = nest.get_thermostat(config['thermostat_id'])
+    else:
+        thermostat = nest.get_thermostat()
+        config['thermostat_id'] = thermostat.device_id
+        cfg_file.write(config)
+
 
     if sys.argv[1] == 'get':
         print('Ambient:', thermostat.ambient_temperature)

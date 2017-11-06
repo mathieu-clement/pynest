@@ -42,12 +42,12 @@ class Nest:
         return list(r.json().keys())
 
 
-    def get_thermostat(self):
-        thermostat_ids = self.get_thermostat_ids()
-        if len(thermostat_ids) > 1:
-            raise Exception("More than one thermostat on this account.")
-        thermostat_id = thermostat_ids[0]
-
+    def get_thermostat(self, thermostat_id=None):
+        if not thermostat_id:
+            thermostat_ids = self.get_thermostat_ids()
+            if len(thermostat_ids) > 1:
+                raise Exception("More than one thermostat on this account.")
+            thermostat_id = thermostat_ids[0]
         return Thermostat(self, thermostat_id)
 
 
@@ -81,12 +81,14 @@ class Thermostat:
 
     @property
     def ambient_temperature(self):
-        return float(self.nest.request('GET', self.url + '/ambient_temperature_c').text)
+        #return float(self.nest.request('GET', self.url + '/ambient_temperature_c').text)
+        return float(self.data['ambient_temperature_c'])
 
 
     @property
     def target_temperature(self):
-        return float(self.nest.request('GET', self.url + '/target_temperature_c').text)
+        #return float(self.nest.request('GET', self.url + '/target_temperature_c').text)
+        return float(self.data['target_temperature_c'])
 
 
     @target_temperature.setter
