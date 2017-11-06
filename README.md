@@ -16,8 +16,8 @@ n = Nest(access_token='c.azYfsYf...')
 
 t = n.get_thermostat()
 print(t.data) # view the JSON data for this thermostat
-print(t.ambient_temperature) # queries thermostat for ambient temperature in the room
-print(t.target_temperature) # queries thermostat for the temperature it is set to
+print(t.ambient_temperature) # ambient temperature in the room
+print(t.target_temperature) # temperature thermostat is set to
 t.target_temperature = 20 # same as turning the dial to 20 degrees Celsius
 t.enable_heat(True)
 t.refresh()
