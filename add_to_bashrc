@@ -1,0 +1,15 @@
+# Usage:
+# temp get
+#     prints ambient and target temperatures
+# temp set 21
+#     sets the target temperature to 21 deg C
+# temp eco
+#     enables eco mode
+# temp heat
+#     disables eco mode, sets to Heat mode
+function temp
+{
+    current="`pwd`"
+    cd /Users/mathieuclement/repos/pynest && ./app.py $@
+    cd "$current"
+}
